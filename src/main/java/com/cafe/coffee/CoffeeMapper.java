@@ -10,8 +10,8 @@ public interface CoffeeMapper {
 
     Coffee coffeePatchDtoToCoffee(CoffeeDto.Patch coffeePatchDto);
 
-    CoffeeDto.Response CoffeeToCoffeeResponseDto(Coffee coffee);
+    CoffeeDto.Response coffeeToCoffeeResponseDto(Coffee coffee);
 
-    List<CoffeeDto.Response> CoffeesToCoffeeResponsesDto(List<Coffee> coffees);
+    List<CoffeeDto.Response> coffeesToCoffeeResponsesDto(List<Coffee> coffees);
 
 }

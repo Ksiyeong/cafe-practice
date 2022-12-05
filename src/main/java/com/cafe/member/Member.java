@@ -4,8 +4,14 @@ import com.cafe.audit.Auditable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
+//@NoArgsConstructor
 public class Member extends Auditable {
 
     @Id

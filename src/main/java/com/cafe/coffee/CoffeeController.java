@@ -27,7 +27,7 @@ public class CoffeeController {
 
         Coffee coffee = coffeeService.createCoffee(mapper.coffeePostDtoToCoffee(coffeePostDto));
 
-        return new ResponseEntity<>(new SingleResponseDto<>(mapper.CoffeeToCoffeeResponseDto(coffee)), HttpStatus.CREATED);
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.coffeeToCoffeeResponseDto(coffee)), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{coffee-id}")
@@ -37,13 +37,13 @@ public class CoffeeController {
 
         Coffee coffee = coffeeService.updateCoffee(mapper.coffeePatchDtoToCoffee(coffeePatchDto));
 
-        return new ResponseEntity<>(new SingleResponseDto<>(mapper.CoffeeToCoffeeResponseDto(coffee)), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.coffeeToCoffeeResponseDto(coffee)), HttpStatus.OK);
     }
 
     @GetMapping("/{coffee-id}")
     public ResponseEntity getCoffee(@Positive @PathVariable("coffee-id") long coffeeId) {
         Coffee coffee = coffeeService.findCoffee(coffeeId);
-        return new ResponseEntity<>(new SingleResponseDto<>(mapper.CoffeeToCoffeeResponseDto(coffee)), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.coffeeToCoffeeResponseDto(coffee)), HttpStatus.OK);
     }
 
     @GetMapping
@@ -52,7 +52,7 @@ public class CoffeeController {
         Page<Coffee> pageCoffees = coffeeService.findCoffees(page - 1, size);
 
         return new ResponseEntity<>(
-                new MultiResponseDto<>(mapper.CoffeesToCoffeeResponsesDto(pageCoffees.getContent()), pageCoffees),
+                new MultiResponseDto<>(mapper.coffeesToCoffeeResponsesDto(pageCoffees.getContent()), pageCoffees),
                 HttpStatus.OK);
     }
 

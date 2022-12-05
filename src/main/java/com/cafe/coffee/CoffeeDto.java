@@ -3,12 +3,9 @@ package com.cafe.coffee;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
-
-import java.util.Optional;
 
 public class CoffeeDto {
     @Getter
@@ -25,7 +22,7 @@ public class CoffeeDto {
         private int price;
     }
 
-    @Getter
+    @Getter // mapper에서 get을 통해 해당객체에서 값을 추출해오는듯 없으면 null됨
     public static class Patch {
         @Setter
         private long coffeeId;
