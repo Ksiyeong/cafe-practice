@@ -10,5 +10,7 @@ public class Stamp extends Auditable {
 
     private Long memberId;
 
+    private int stampCount = 0;
+
     // TODO: 스탬프 연동해보기
 }
