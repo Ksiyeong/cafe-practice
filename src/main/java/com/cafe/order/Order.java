@@ -22,6 +22,16 @@ public class Order extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
+    private List<OrderCoffee> orderCoffees = new ArrayList<>();
+
+    public void addOrderCoffees(OrderCoffee orderCoffee) {
+        orderCoffees.add(orderCoffee);
+        if (orderCoffee.getOrder() != this) {
+            orderCoffee.setOrder(this);
+        }
+    }
+
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus = OrderStatus.ORDER_REQUEST;
 

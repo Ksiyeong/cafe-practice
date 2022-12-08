@@ -1,6 +1,7 @@
 package com.cafe.order;
 
 import com.cafe.audit.Auditable;
+import com.cafe.coffee.Coffee;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,13 +18,11 @@ public class OrderCoffee extends Auditable {
 
     @ManyToOne
     @JoinColumn(name = "ORDER_ID")
-    @Column(nullable = false)
-    private Long orderId;
+    private Order order;
 
     @ManyToOne
     @JoinColumn(name = "COFFEE_ID")
-    @Column(nullable = false)
-    private Long coffeeId;
+    private Coffee coffee;
 
     private int quantity = 0;
 }
