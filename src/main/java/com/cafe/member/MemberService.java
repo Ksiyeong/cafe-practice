@@ -19,6 +19,7 @@ public class MemberService {
 
     public Member createMember(Member member) {
         verifyExistMember(member.getEmail());
+        member.setStamp(new Stamp());
         return memberRepository.save(member);
     }
 
