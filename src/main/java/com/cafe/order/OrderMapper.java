@@ -24,7 +24,7 @@ public interface OrderMapper {
 
                     orderCoffee.setQuantity(orderCoffeeDto.getQuantity());
 
-                    order.addOrderCoffees(orderCoffee);
+                    order.addOrderCoffee(orderCoffee);
                 });
 
         return order;
@@ -36,7 +36,16 @@ public interface OrderMapper {
         orderResponseDto.setOrderId(order.getOrderId());
         orderResponseDto.setMemberId(order.getMember().getMemberId());
         orderResponseDto.setOrderStatus(order.getOrderStatus());
-        orderResponseDto.setOrderCoffees(order.getOrderCoffees().stream()
+        orderResponseDto.setOrderCoffees(orderCoffeesToOrderCoffeeResponsesDto(order.getOrderCoffees()));
+        orderResponseDto.setCreatedAt(order.getCreatedAt());
+
+        return orderResponseDto;
+    }
+
+    List<OrderDto.Response> ordersToOrderResponsesDto(List<Order> orders);
+
+    default List<OrderCoffeeDto.Response> orderCoffeesToOrderCoffeeResponsesDto(List<OrderCoffee> orderCoffees) {
+        return orderCoffees.stream()
                 .map(orderCoffee -> {
                     OrderCoffeeDto.Response orderCoffeeResponseDto = new OrderCoffeeDto.Response();
                     orderCoffeeResponseDto.setCoffeeId(orderCoffee.getCoffee().getCoffeeId());
@@ -46,12 +55,6 @@ public interface OrderMapper {
                     orderCoffeeResponseDto.setPrice(orderCoffee.getCoffee().getPrice());
                     return orderCoffeeResponseDto;
                 })
-                .collect(Collectors.toList()));
-        orderResponseDto.setCreatedAt(order.getCreatedAt());
-
-        return orderResponseDto;
+                .collect(Collectors.toList());
     }
-
-    List<OrderDto.Response> ordersToOrderResponsesDto(List<Order> orders);
-
 }

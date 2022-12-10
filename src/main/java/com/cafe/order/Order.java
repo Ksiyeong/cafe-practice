@@ -25,7 +25,7 @@ public class Order extends Auditable {
     @OneToMany(mappedBy = "order", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<OrderCoffee> orderCoffees = new ArrayList<>();
 
-    public void addOrderCoffees(OrderCoffee orderCoffee) {
+    public void addOrderCoffee(OrderCoffee orderCoffee) {
         orderCoffees.add(orderCoffee);
         if (orderCoffee.getOrder() != this) {
             orderCoffee.setOrder(this);

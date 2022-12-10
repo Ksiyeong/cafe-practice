@@ -26,7 +26,6 @@ public class OrderController {
     @PostMapping
     public ResponseEntity postOrder(@Valid @RequestBody OrderDto.Post orderPostDto) {
         Order order = orderService.createOrder(mapper.orderPostDtoToOrder(orderPostDto));
-        System.out.println("안녕");
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.orderToOrderResponseDto(order)),
                 HttpStatus.CREATED);
