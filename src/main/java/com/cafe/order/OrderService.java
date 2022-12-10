@@ -28,6 +28,10 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
+    public Order findOrder(long orderId) {
+        return orderRepository.findById(orderId).get();
+    }
+
     public void verifyOrder(Order order) {
         // 유효한 멤버인지 확인
         memberService.findVerifiedMember(order.getMember().getMemberId());

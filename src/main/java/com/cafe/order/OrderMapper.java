@@ -29,5 +29,24 @@ public interface OrderMapper {
         return order;
     }
 
-    OrderDto.Response orderToOrderResponseDto(Order order);
+    default OrderDto.Response orderToOrderResponseDto(Order order) {
+        OrderDto.Response orderResponseDto = new OrderDto.Response();
+
+        orderResponseDto.setMemberId(order.getMember().getMemberId());
+        orderResponseDto.setOrderStatus(order.getOrderStatus());
+        orderResponseDto.setOrderCoffees(order.getOrderCoffees().stream()
+                .map(orderCoffee -> {
+                    OrderCoffeeDto.Response orderCoffeeResponseDto = new OrderCoffeeDto.Response();
+                    orderCoffeeResponseDto.setCoffeeId(orderCoffee.getCoffee().getCoffeeId());
+                    orderCoffeeResponseDto.setQuantity(orderCoffee.getQuantity());
+                    orderCoffeeResponseDto.setKorName(orderCoffee.getCoffee().getKorName());
+                    orderCoffeeResponseDto.setEngName(orderCoffee.getCoffee().getEngName());
+                    orderCoffeeResponseDto.setPrice(orderCoffee.getCoffee().getPrice());
+                    return orderCoffeeResponseDto;
+                })
+                .collect(Collectors.toList()));
+        orderResponseDto.setCreatedAt(order.getCreatedAt());
+
+        return orderResponseDto;
+    }
 }

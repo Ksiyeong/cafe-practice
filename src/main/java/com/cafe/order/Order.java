@@ -22,7 +22,7 @@ public class Order extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<OrderCoffee> orderCoffees = new ArrayList<>();
 
     public void addOrderCoffees(OrderCoffee orderCoffee) {
