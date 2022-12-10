@@ -51,7 +51,7 @@ public class CoffeeService {
         }
     }
 
-    private Coffee findVerifiedCoffee(long coffeeId) {
+    public Coffee findVerifiedCoffee(long coffeeId) {
         Optional<Coffee> optionalCoffee = coffeeRepository.findById(coffeeId);
         Coffee findCoffee = optionalCoffee.orElseThrow(() -> new BusinessLogicException(ExceptionCode.COFFEE_NOT_FOUND));
         return findCoffee;

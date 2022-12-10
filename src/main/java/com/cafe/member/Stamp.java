@@ -16,4 +16,8 @@ public class Stamp extends Auditable {
     private Long stampId;
 
     private int stampCount = 0;
+
+    public void setStampCount(int stampCount) {
+        this.stampCount += stampCount;
+    }
 }

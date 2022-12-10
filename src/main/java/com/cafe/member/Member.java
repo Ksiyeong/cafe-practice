@@ -37,7 +37,7 @@ public class Member extends Auditable {
     @JoinColumn(name = "STAMP_ID")
     private Stamp stamp;
 
-    @OneToMany(mappedBy = "member") // TODO: Cascade 타입 Order Control 및 서비스 구현후 확인
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Order> orders = new ArrayList<>();
 
     public void setOrder(Order order) {
