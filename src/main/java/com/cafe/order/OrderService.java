@@ -1,8 +1,12 @@
 package com.cafe.order;
 
 import com.cafe.coffee.CoffeeService;
+import com.cafe.exception.BusinessLogicException;
+import com.cafe.exception.ExceptionCode;
 import com.cafe.member.MemberService;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -29,10 +33,16 @@ public class OrderService {
     }
 
     public Order findOrder(long orderId) {
-        return orderRepository.findById(orderId).get();
+        return findVerifiedOrder(orderId);
     }
 
-    public void verifyOrder(Order order) {
+    private Order findVerifiedOrder(long orderId) {
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        Order findOrder = optionalOrder.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ORDER_NOT_FOUND));
+        return findOrder;
+    }
+
+    private void verifyOrder(Order order) {
         // 유효한 멤버인지 확인
         memberService.findVerifiedMember(order.getMember().getMemberId());
 
