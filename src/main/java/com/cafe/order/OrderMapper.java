@@ -3,6 +3,7 @@ package com.cafe.order;
 import com.cafe.coffee.Coffee;
 import org.mapstruct.Mapper;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
@@ -32,6 +33,7 @@ public interface OrderMapper {
     default OrderDto.Response orderToOrderResponseDto(Order order) {
         OrderDto.Response orderResponseDto = new OrderDto.Response();
 
+        orderResponseDto.setOrderId(order.getOrderId());
         orderResponseDto.setMemberId(order.getMember().getMemberId());
         orderResponseDto.setOrderStatus(order.getOrderStatus());
         orderResponseDto.setOrderCoffees(order.getOrderCoffees().stream()
@@ -49,4 +51,7 @@ public interface OrderMapper {
 
         return orderResponseDto;
     }
+
+    List<OrderDto.Response> ordersToOrderResponsesDto(List<Order> orders);
+
 }

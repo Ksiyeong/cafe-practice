@@ -67,11 +67,8 @@ public class MemberController {
         Page<Member> pageMembers = memberService.findMembers(page - 1, size);
 
         return new ResponseEntity<>(
-                new MultiResponseDto<>(
-                        mapper.membersToMemberResponsesDto(pageMembers.getContent()),
-                        pageMembers),
-                HttpStatus.OK
-        );
+                new MultiResponseDto<>(mapper.membersToMemberResponsesDto(pageMembers.getContent()), pageMembers),
+                HttpStatus.OK);
     }
 
     @DeleteMapping("/{member-id}")

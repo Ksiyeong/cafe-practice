@@ -4,6 +4,9 @@ import com.cafe.coffee.CoffeeService;
 import com.cafe.exception.BusinessLogicException;
 import com.cafe.exception.ExceptionCode;
 import com.cafe.member.MemberService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -34,6 +37,12 @@ public class OrderService {
 
     public Order findOrder(long orderId) {
         return findVerifiedOrder(orderId);
+    }
+
+    public Page<Order> findOrders(int page, int size) {
+        return orderRepository.findAll(PageRequest.of(
+                page, size, Sort.by("orderId").descending()
+        ));
     }
 
     private Order findVerifiedOrder(long orderId) {
