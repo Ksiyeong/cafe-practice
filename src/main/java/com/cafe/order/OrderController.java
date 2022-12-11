@@ -31,6 +31,18 @@ public class OrderController {
                 HttpStatus.CREATED);
     }
 
+    // TODO: updateOrder 구현 -> 주문 상태 변경하는 기능 (주인장이)
+    @PatchMapping("/{order-id}")
+    public ResponseEntity patchOrder(@Positive @PathVariable("order-id") long orderId,
+                                     @Valid @RequestBody OrderDto.Patch orderPatchDto) {
+        orderPatchDto.setOrderId(orderId);
+        Order order = orderService.updateOrder(mapper.orderPatchDtoToOrder(orderPatchDto));
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.orderToOrderResponseDto(order)),
+                HttpStatus.OK);
+    }
+
     @GetMapping("/{order-id}")
     public ResponseEntity getOrder(@Positive @PathVariable("order-id") long orderId) {
         Order order = orderService.findOrder(orderId);
@@ -45,6 +57,13 @@ public class OrderController {
         return new ResponseEntity(
                 new MultiResponseDto<>(mapper.ordersToOrderResponsesDto(pageOrders.getContent()), pageOrders),
                 HttpStatus.OK);
+    }
+
+    //TODO: DeleteOrder 구현하기
+    @DeleteMapping("/{order-id}")
+    public ResponseEntity deleteOrder(@Positive @PathVariable("order-id") long orderId) {
+        orderService.cancelOrder(orderId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }

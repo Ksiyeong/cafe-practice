@@ -28,6 +28,13 @@ public class OrderDto {
 
     @Getter
     @Setter
+    public static class Patch {
+        private long orderId;
+        private Order.OrderStatus orderStatus;
+    }
+
+    @Getter
+    @Setter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Response {

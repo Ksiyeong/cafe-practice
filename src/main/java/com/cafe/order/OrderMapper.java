@@ -30,6 +30,8 @@ public interface OrderMapper {
         return order;
     }
 
+    Order orderPatchDtoToOrder(OrderDto.Patch orderPatchDto);
+
     default OrderDto.Response orderToOrderResponseDto(Order order) {
         OrderDto.Response orderResponseDto = new OrderDto.Response();
 
