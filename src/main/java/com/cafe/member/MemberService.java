@@ -6,10 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
 
@@ -20,6 +23,7 @@ public class MemberService {
     public Member createMember(Member member) {
         verifyExistMember(member.getEmail());
         member.setStamp(new Stamp());
+
         return memberRepository.save(member);
     }
 
@@ -32,10 +36,12 @@ public class MemberService {
         return memberRepository.save(findMember);
     }
 
+    @Transactional(readOnly = true)
     public Member findMember(long memberId) {
         return findVerifiedMember(memberId);
     }
 
+    @Transactional(readOnly = true)
     public Page<Member> findMembers(int page, int size) {
         return memberRepository.findAll(PageRequest.of(
                 page, size, Sort.by("memberId").descending()

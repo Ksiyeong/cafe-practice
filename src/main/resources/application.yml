@@ -12,3 +12,10 @@ spring:
     properties:
       hibernate:
         format_sql: false # SQL pretty print
+# 트랜잭션 로그
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG

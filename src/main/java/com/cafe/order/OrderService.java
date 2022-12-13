@@ -8,10 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 public class OrderService {
     private final OrderRepository orderRepository;
     private final MemberService memberService;
@@ -41,10 +43,12 @@ public class OrderService {
         return orderRepository.save(findOrder);
     }
 
+    @Transactional(readOnly = true)
     public Order findOrder(long orderId) {
         return findVerifiedOrder(orderId);
     }
 
+    @Transactional(readOnly = true)
     public Page<Order> findOrders(int page, int size) {
         return orderRepository.findAll(PageRequest.of(
                 page, size, Sort.by("orderId").descending()

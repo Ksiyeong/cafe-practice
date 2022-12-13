@@ -6,10 +6,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 public class CoffeeService {
     private final CoffeeRepository coffeeRepository;
 
@@ -32,10 +34,12 @@ public class CoffeeService {
         return coffeeRepository.save(findCoffee);
     }
 
+    @Transactional(readOnly = true)
     public Coffee findCoffee(long coffeeId) {
         return findVerifiedCoffee(coffeeId);
     }
 
+    @Transactional(readOnly = true)
     public Page<Coffee> findCoffees(int page, int size) {
         return coffeeRepository.findAll(PageRequest.of(page, size, Sort.by("coffeeId").descending()));
     }
