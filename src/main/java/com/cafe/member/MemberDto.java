@@ -9,6 +9,7 @@ import lombok.Setter;
 
 public class MemberDto {
     @Getter
+    @AllArgsConstructor // 테스트를 위해 추가됨
     public static class Post {
         @NotBlank
         @Email
@@ -24,8 +25,8 @@ public class MemberDto {
     }
 
     @Getter
+    @Setter
     public static class Patch {
-        @Setter
         private Long memberId;
 
         private String name;

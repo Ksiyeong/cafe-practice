@@ -19,3 +19,9 @@ logging:
       springframework:
         orm:
           jpa: DEBUG
+
+# sliceTest 글자 깨짐
+server:
+  servlet:
+    encoding:
+      force-response: true

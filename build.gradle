@@ -32,6 +32,9 @@ dependencies {
 	// 매퍼
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+
+	// 테스트를 위해 추가
+	implementation 'com.google.code.gson:gson'
 }
 
 tasks.named('test') {
