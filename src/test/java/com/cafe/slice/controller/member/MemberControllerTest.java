@@ -1,5 +1,6 @@
 package com.cafe.slice.controller.member;
 
+import com.cafe.member.Member;
 import com.cafe.member.MemberDto;
 import com.cafe.member.MemberRepository;
 import com.google.gson.Gson;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -115,8 +117,26 @@ class MemberControllerTest {
     }
 
     @Test
-    void getMemberTest() {
-        //TODO
+    void getMemberTest() throws Exception {
+        //given
+        Member member = memberRepository.findByEmail("test1@test.com").get();
+
+        //when
+        ResultActions actions =
+                mockMvc.perform(
+                        get("/members/" + member.getMemberId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                );
+
+        //then
+        MvcResult result = actions
+                .andExpect(jsonPath("$.data.email").value(member.getEmail()))
+                .andExpect(jsonPath("$.data.name").value(member.getName()))
+                .andExpect(jsonPath("$.data.phone").value(member.getPhone()))
+                .andReturn();
+
+        System.out.println("\nresult = " + result.getResponse().getContentAsString() + "\n");
+
     }
 
     @Test
