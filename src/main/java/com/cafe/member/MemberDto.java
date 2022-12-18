@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 public class MemberDto {
@@ -39,6 +40,7 @@ public class MemberDto {
 
     @Getter
     @AllArgsConstructor
+    @NoArgsConstructor // 테스트를 위해 추가
     public static class Response {
         private long memberId;
         private String email;
