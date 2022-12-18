@@ -1,4 +1,4 @@
-package com.cafe.slice.controller.member;
+package com.cafe.slice;
 
 import com.cafe.member.Member;
 import com.cafe.member.MemberDto;
