@@ -14,7 +14,10 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -57,13 +60,12 @@ public class MemberControllerMockTest {
         String content = gson.toJson(post);
 
         //when
-        ResultActions actions =
-                mockMvc.perform(
-                        post("/members")
-                                .accept(MediaType.APPLICATION_JSON)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(content)
-                );
+        ResultActions actions = mockMvc.perform(
+                post("/members")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+        );
 
         //then
         MvcResult result = actions
@@ -71,6 +73,43 @@ public class MemberControllerMockTest {
                 .andExpect(jsonPath("$.data.email").value(post.getEmail()))
                 .andExpect(jsonPath("$.data.name").value(post.getName()))
                 .andExpect(jsonPath("$.data.phone").value(post.getPhone()))
+                .andReturn();
+
+        System.out.println("\nresult = " + result.getResponse().getContentAsString() + "\n");
+
+    }
+
+    @Test
+    void patchMemberTest() throws Exception {
+        //given
+        MemberDto.Patch patch = new MemberDto.Patch();
+        patch.setName("패치테스트");
+
+        MemberDto.Response response = new MemberDto.Response(
+                1L,
+                "test@test.com",
+                patch.getName(),
+                "010-1234-5678"
+        );
+
+        given(mapper.memberPatchDtoToMember(Mockito.any(MemberDto.Patch.class))).willReturn(new Member());
+        given(memberService.updateMember(Mockito.any(Member.class))).willReturn(new Member());
+        given(mapper.memberToMemberResponseDto(Mockito.any(Member.class))).willReturn(response);
+
+        String content = gson.toJson(patch);
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                patch("/members/" + response.getMemberId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+        );
+
+        //then
+        MvcResult result = actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.name").value(patch.getName()))
                 .andReturn();
 
         System.out.println("\nresult = " + result.getResponse().getContentAsString() + "\n");
