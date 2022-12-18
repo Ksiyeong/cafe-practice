@@ -35,16 +35,16 @@ dependencies {
     // 데이터유효성검사
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    // 매퍼
-    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-
     // 테스트를 위해 추가
     implementation 'com.google.code.gson:gson'
 
     // api 문서화
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+
+    // 매퍼
+    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 }
 
 tasks.named('test') {
