@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -109,6 +110,7 @@ class MemberControllerTest {
 
         //then
         MvcResult result = patchActions
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.name").value(patch.getName()))
                 .andReturn();
 
@@ -130,6 +132,7 @@ class MemberControllerTest {
 
         //then
         MvcResult result = actions
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.email").value(member.getEmail()))
                 .andExpect(jsonPath("$.data.name").value(member.getName()))
                 .andExpect(jsonPath("$.data.phone").value(member.getPhone()))
@@ -140,13 +143,50 @@ class MemberControllerTest {
     }
 
     @Test
-    void getMembersTest() {
-        //TODO
+    void getMembersTest() throws Exception {
+        //given
+        int page = 1;
+        int size = 5;
+
+        //when
+        ResultActions actions =
+                mockMvc.perform(
+                        get("/members?page=" + page + "&size=" + size)
+                                .contentType(MediaType.APPLICATION_JSON)
+                );
+
+        //then
+        MvcResult result = actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data").isArray())
+                .andExpect(jsonPath("$.pageInfo.page").value(page))
+                .andExpect(jsonPath("$.pageInfo.size").value(size))
+                .andExpect(jsonPath("$.pageInfo.totalElements").value(9))
+                .andExpect(jsonPath("$.pageInfo.totalPages").value(2))
+                .andReturn();
+
+        System.out.println("\nresult = " + result.getResponse().getContentAsString() + "\n");
+
     }
 
     @Test
-    void deleteMemberTest() {
-        //TODO
+    void deleteMemberTest() throws Exception {
+        //given
+        long memberId = memberRepository.findByEmail("test1@test.com").get().getMemberId();
+
+        //when
+        ResultActions actions =
+                mockMvc.perform(
+                        delete("/members/" + memberId)
+                );
+
+        //then
+        MvcResult result = actions
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        System.out.println("\nresult = " + result.getResponse().getContentAsString() + "\n");
+
     }
 
 }
