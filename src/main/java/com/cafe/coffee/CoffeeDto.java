@@ -4,11 +4,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
 public class CoffeeDto {
     @Getter
+    @AllArgsConstructor // 테스트케이스를 위한 추가
+    @NoArgsConstructor
     public static class Post {
         @NotBlank(message = "한글 커피 이름은 공백이 아니어야 합니다.")
         private String korName;
