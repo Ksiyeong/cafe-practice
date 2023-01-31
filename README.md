@@ -26,3 +26,5 @@
 - <img src="https://img.shields.io/badge/Amazon RDS-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white">
 - <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 - <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=Amazon">
+- <img src="https://img.shields.io/badge/linode-00A95C?style=for-the-badge&logo=linode&logoColor=white">
+- <img src="https://img.shields.io/badge/AWS%20Amplifyt-FF9900?style=for-the-badge&logo=AWS%20Amplify&logoColor=white">
